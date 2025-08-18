@@ -1,0 +1,158 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body{
+    background-color: aliceblue;
+}
+.mr-navbar-inner-outer {
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #d7d7d7;
+    overflow: hidden;
+}
+
+.mr-navbar-inner {
+    position: relative;
+    display: flex;
+    max-width: 1170px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mr-navbar-panel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 15px 15px 15px 0;
+    margin-bottom: 22px;
+    max-width: 260px;
+    min-width: 200px;
+    z-index: 1;
+}
+
+.mr-navbar-panel::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    background: #ffffff;
+    transform: skewX(16deg);
+    transform-origin: 50% 100%;
+    will-change: transform;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.mr-navbar-nav-wrap {
+    flex-grow: 1;
+}
+
+.mr-navbar-aside {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0 10px 15px;
+    z-index: 1;
+}
+
+.mr-navbar-aside::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    background: #ffffff;
+    transform: skewX(16deg);
+    transform-origin: 50% 90%;
+    will-change: transform;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.mr-navbar-contacts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: -5px;
+    margin-left: -30px;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: .075em;
+    font-weight: 500;
+}
+
+.mr-navbar-contacts a {
+    color: #831919;
+}
+
+.list-share {
+    display: flex;
+    gap: 5px;
+    margin-left: 10px;
+}
+
+.list-share li {
+    width: 35px;
+    height: 35px;
+    background-color: black;
+}
+
+.mr-navbar-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.mr-navbar-nav {
+    display: flex;
+    gap: 10px 20px;
+    list-style-type: none;
+}
+
+.mr-navbar-nav li {
+    padding: 22px 0px;
+    border-bottom: 5px solid transparent;
+    text-transform: uppercase;
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+.mr-navbar-nav li:hover {
+    border-bottom: 5px solid orangered;
+    color: orangered;
+}
+
+.mr-navbar-nav li a {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #222;
+}
+
+/* Phones (portrait and smaller) */
+@media (max-width: 575.98px) {
+  /* Styles for very small screens */
+}
+
+/* Phones (landscape) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  /* Styles for small devices */
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  /* Styles for tablets */
+}
+
+/* Desktops */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  /* Styles for medium desktops */
+}

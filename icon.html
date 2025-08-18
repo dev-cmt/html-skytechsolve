@@ -1,128 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Theme Switcher</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<style>
-:root {
-    --mr-default-bg: #e4e4e4;
-    --mr-default-text: #222222;
-    --mr-default2: #007bff; /* Gear button color */
-}
-
-body {
-    background-color: var(--mr-default-bg);
-    color: var(--mr-default-text);
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-}
-
-/* Theme setting button */
-.theme-setting {
-    position: fixed; /* stays on screen */
-    right: 15px;
-    bottom: 15px;
-    z-index: 999;
-}
-
-.theme-setting button {
-    background: var(--mr-default2);
-    border: none;
-    padding: 10px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.theme-setting button i {
-    font-size: 20px;
-    color: #fff;
-    animation: rotateGear 2s linear infinite;
-}
-
-/* Theme content panel */
-.theme-content {
-    position: fixed;       /* fixed next to button */
-    bottom: 60px;          /* above the button */
-    right: 15px;
-    width: 200px;
-    max-height: 0;         /* collapsed */
-    overflow: hidden;
-    opacity: 0;
-    padding: 0 10px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;  /* smooth open/close */
-}
-
-/* Show panel */
-.theme-content.show {
-    max-height: 200px;  /* adjust based on content */
-    opacity: 1;
-    padding: 10px;
-}
-
-/* Rotation for gear */
-@keyframes rotateGear {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Input styling */
-.theme-content label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-.theme-content input[type="color"] {
-    margin-left: 5px;
-    cursor: pointer;
-    border: none;
-    width: 40px;
-    height: 25px;
-    vertical-align: middle;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="icon.css">
 </head>
+
 <body>
+    <div class="mr-navbar-inner-outer">
+        <div class="mr-navbar-inner">
 
-<h1>Welcome to the Website</h1>
-<p>Use the gear button at bottom right to change theme colors dynamically!</p>
+            <div class="mr-navbar-panel">
+                <!--Brand Logo-->
+                <div class="mr-navbar-brand">
+                    <a href="index.html">
+                        <img class="brand-logo-dark" src="assets/img/logo.png" alt="" width="198" height="66">
+                    </a>
+                </div>
+            </div>
 
-<!-- Theme button and panel -->
-<div class="theme-setting">
-    <button id="show-theme-bar"><i class="fa-solid fa-gear"></i></button>
-</div>
-<div class="theme-content">
-    <h4>Choose Theme</h4>
-    <label>Background Color: <input type="color" id="bg-color" value="#e4e4e4"></label>
-    <label>Text Color: <input type="color" id="text-color" value="#222222"></label>
-</div>
+            <div class="mr-navbar-nav-wrap">
+                <div class="mr-navbar-aside">
+                    <ul class="mr-navbar-contacts">
+                        <li>
+                            <a class="phone" href="tel:#">+1 718-999-3939</a>
+                        </li>
+                        <li>
+                            <a class="address" href="#">514 S. Magnolia St. Orlando, FL 32806</a>
+                        </li>
+                    </ul>
+                    <ul class="list-share">
+                        <li><a class="icon mdi mdi-facebook" href="#"></a></li>
+                        <li><a class="icon mdi mdi-twitter" href="#"></a></li>
+                        <li><a class="icon mdi mdi-instagram" href="#"></a></li>
+                        <li><a class="icon mdi mdi-google-plus" href="#"></a></li>
+                    </ul>
+                </div>
 
-<script>
-const showBtn = document.getElementById('show-theme-bar');
-const themeContent = document.querySelector('.theme-content');
-const bgInput = document.getElementById('bg-color');
-const textInput = document.getElementById('text-color');
+                <nav class="mr-navbar-main">
+                    <!-- RD Navbar Nav-->
+                    <ul class="mr-navbar-nav">
+                        <li class="mr-nav-item active"><a class="mr-nav-link" href="index.html">Home</a></li>
+                        <li class="mr-nav-item"><a class="mr-nav-link" href="about-us.html">About us</a></li>
+                        <li class="mr-nav-item"><a class="mr-nav-link" href="typography.html">Typography</a></li>
+                        <li class="mr-nav-item"><a class="mr-nav-link" href="contacts.html">Contacts</a></li>
+                    </ul>
+                </nav>
 
-// Toggle theme panel smoothly
-showBtn.addEventListener('click', () => {
-    themeContent.classList.toggle('show');
-});
+            </div>
 
-// Change background dynamically
-bgInput.addEventListener('input', (e) => {
-    document.documentElement.style.setProperty('--mr-default-bg', e.target.value);
-});
-
-// Change text color dynamically
-textInput.addEventListener('input', (e) => {
-    document.documentElement.style.setProperty('--mr-default-text', e.target.value);
-});
-</script>
-
+        </div>
+    </div>
 </body>
+
 </html>
