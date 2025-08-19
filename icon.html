@@ -5,14 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="icon.css">
 </head>
 
 <body>
     <div class="navbar-inner-outer">
         <div class="navbar-inner">
-
             <div class="navbar-panel">
                 <!--Brand Logo-->
                 <div class="navbar-brand">
@@ -21,24 +19,38 @@
                     </a>
                 </div>
             </div>
-            <!-- <nav class="navbar navbar-light bg-light">
-                <form class="form-inline">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </nav> -->
-            <div class="button-toggle">
-                <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-baseline-density-medium"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h16" /><path d="M4 12h16" /><path d="M4 4h16" /></svg>
-            </div>
 
             <div class="navbar-wrap">
                 <div class="navbar-aside">
                     <ul class="navbar-contacts">
                         <li>
-                            <a class="phone" href="tel:#">+1 718-999-3939</a>
+                            <a class="phone" href="tel:#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-phone">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
+                                </svg>
+                                <span>+1 718-999-3939</span>
+                            </a>
                         </li>
                         <li>
-                            <a class="address" href="#">514 S. Magnolia St. Orlando, FL 32806</a>
+                            <a class="" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                                    <path
+                                        d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+                                </svg>
+
+
+                                <span>514 S. Magnolia St. Orlando, FL 32806</span>
+                            </a>
                         </li>
                     </ul>
                     <ul class="list-share">
@@ -50,14 +62,31 @@
                 </div>
 
                 <nav class="navbar-main">
-                    <!-- RD Navbar Nav-->
-                    <ul class="navbar-nav">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about-us.html">About us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="typography.html">Typography</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contacts.html">Contacts</a></li>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+
+                        <li>
+                            <a href="about-us.html">About Us</a>
+                            <ul>
+                                <li><a href="#">Our Team</a></li>
+                                <li>
+                                    <a href="#">Services ▸</a>
+                                    <ul>
+                                        <li><a href="#">Web Design</a></li>
+                                        <li><a href="#">Development</a></li>
+                                        <li><a href="#">SEO</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Careers</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="typography.html">Typography</a></li>
+                        <li><a href="contacts.html">Contacts</a></li>
                     </ul>
+
                 </nav>
+
 
             </div>
 
