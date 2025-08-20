@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Fixed Navigation</title>
     <link rel="stylesheet" href="icon.css">
 </head>
 
@@ -14,15 +14,28 @@
             <!--Brand Logo-->
             <div class="navbar-brand">
                 <a href="index.html">
-                    <img class="brand-logo-dark" src="assets/img/logo.png" alt="" width="198" height="66">
+                    <img class="brand-logo-dark" src="assets/img/logo.png" alt=""
+                        height="66">
                 </a>
             </div>
-            <!--Mobile Toggle-->
-            <div class="mobile-toggle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"  stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-baseline-density-medium"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h16"/><path d="M4 12h16"/><path d="M4 4h16"/></svg>
+            <!--Mobile Search-->
+            <div class="mobile-search-box">
+                <input type="text" value="" placeholder="Search...">
+                <button>Search</button>
             </div>
 
             <div class="navbar-wrap">
+                <!--Mobile Toggle-->
+                <div class="mobile-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-baseline-density-medium">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 20h16" />
+                        <path d="M4 12h16" />
+                        <path d="M4 4h16" />
+                    </svg>
+                </div>
                 <div class="navbar-aside">
                     <ul class="navbar-contacts">
                         <li>
@@ -49,17 +62,15 @@
                                     <path
                                         d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
                                 </svg>
-
-
                                 <span>514 S. Magnolia St. Orlando, FL 32806</span>
                             </a>
                         </li>
                     </ul>
                     <ul class="list-share">
-                        <li><a class="icon mdi mdi-facebook" href="#"></a></li>
-                        <li><a class="icon mdi mdi-twitter" href="#"></a></li>
-                        <li><a class="icon mdi mdi-instagram" href="#"></a></li>
-                        <li><a class="icon mdi mdi-google-plus" href="#"></a></li>
+                        <li><a class="icon mdi mdi-facebook" href="#">F</a></li>
+                        <li><a class="icon mdi mdi-twitter" href="#">T</a></li>
+                        <li><a class="icon mdi mdi-instagram" href="#">I</a></li>
+                        <li><a class="icon mdi mdi-google-plus" href="#">G</a></li>
                     </ul>
                 </div>
 
@@ -92,6 +103,59 @@
 
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const navbar = document.querySelector(".navbar-main");
+            const toggleBtn = document.querySelector(".mobile-toggle");
+            const navbarWrap = document.querySelector(".navbar-wrap");
+            const body = document.body;
+
+            // Mobile menu toggle
+            toggleBtn.addEventListener("click", () => {
+                navbarWrap.classList.toggle("navbar-mobile");
+                navbar.classList.toggle("mobile-active");
+                body.style.overflow = navbarWrap.classList.contains("navbar-mobile") ? "hidden" : "";
+            });
+
+            // Close button for mobile menu
+            const closeButton = document.createElement("button");
+            closeButton.className = "mobile-close";
+            closeButton.innerHTML = "&times;";
+            closeButton.addEventListener("click", () => {
+                navbarWrap.classList.remove("navbar-mobile");
+                navbar.classList.remove("mobile-active");
+                body.style.overflow = "";
+            });
+            navbar.appendChild(closeButton);
+
+            // Click toggle for submenus (dynamic)
+            navbar.addEventListener("click", e => {
+                const link = e.target.closest("a");
+                if (!link) return;
+
+                const parentLi = link.parentElement;
+                const submenu = link.nextElementSibling;
+
+                if (submenu && submenu.tagName === "UL") {
+                    e.preventDefault();
+
+                    // Close other open submenus at same level
+                    parentLi.parentElement.querySelectorAll("li.open")
+                        .forEach(li => li !== parentLi && li.classList.remove("open"));
+
+                    parentLi.classList.toggle("open");
+                }
+            });
+
+            // Close all submenus when clicking outside
+            document.addEventListener("click", e => {
+                if (!e.target.closest(".navbar-main")) {
+                    navbar.querySelectorAll("li.open").forEach(li => li.classList.remove("open"));
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
