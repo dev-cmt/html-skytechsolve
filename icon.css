@@ -9,6 +9,10 @@ body {
   background-color: aliceblue;
 }
 
+
+/*--------------------------------------------------------------
+# Header Section
+--------------------------------------------------------------*/
 .mobile-toggle,
 .mobile-search-box {
   display: none;
@@ -71,6 +75,7 @@ body {
   will-change: transform;
   z-index: -1;
 }
+
 .navbar-aside::after {
   position: absolute;
   content: '';
@@ -120,16 +125,25 @@ body {
   background-color: black;
 }
 
-/* Menu -> Main Menu List */
+/* ========== BASE MENU ========== */
 .navbar-main {
   display: flex;
   justify-content: flex-end;
 }
 
+.navbar-main ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
 
-/* Main menu links (first level only) */
-.navbar-main > ul > li > a {
+.navbar-main li {
   position: relative;
+}
+
+.navbar-main a {
   display: inline-block;
   text-decoration: none;
   font-size: 16px;
@@ -141,9 +155,10 @@ body {
   cursor: pointer;
 }
 
-/* Border animation for main links only */
-.navbar-main > ul > li > a::before,
-.navbar-main > ul > li > a::after {
+
+/* Hover underline effect (main links only) */
+.navbar-main>ul>li>a::before,
+.navbar-main>ul>li>a::after {
   content: "";
   position: absolute;
   width: 0%;
@@ -151,99 +166,114 @@ body {
   background: orangered;
   transition: 0.3s;
 }
-
-.navbar-main > ul > li > a::before {
+.navbar-main>ul>li>a::before {
   left: 0;
   bottom: 0;
 }
-
-.navbar-main > ul > li > a::after {
+.navbar-main>ul>li>a::after {
   right: 0;
   top: 0;
 }
-
-/* Animate on hover for main links only */
-.navbar-main > ul > li > a:hover {
+.navbar-main>ul>li>a:hover {
   color: orangered;
 }
-
-.navbar-main > ul > li > a:hover::before,
-.navbar-main > ul > li > a:hover::after {
+.navbar-main>ul>li>a:hover::before,
+.navbar-main>ul>li>a:hover::after {
   width: 100%;
 }
 
-/* Main menu */
-/* Menu */
-    .navbar-main ul {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-    }
+/* ========== SUBMENU ========== */
+.navbar-main li ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  min-width: 180px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  z-index: 99;
+  flex-direction: column;
+}
 
-    .navbar-main li {
-      position: relative;
-    }
+.navbar-main li ul li {
+  width: 100%;
+}
 
-    .navbar-main a {
-      display: inline-block;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: 600;
-      text-transform: uppercase;
-      padding: 10px 12px;
-      color: #222;
-      transition: color 0.3s ease;
-      cursor: pointer;
-    }
+.navbar-main li ul li a {
+  font-size: 14px;
+  font-weight: normal;
+  text-transform: none;
+  color: #333;
+  padding: 10px 15px;
+  display: block;
+  transition: 0.2s;
+}
 
-    .navbar-main li.open > a {
-      color: orangered;
-    }
+.navbar-main li ul li a:hover {
+  background: orangered;
+  color: #fff;
+}
 
-    /* Submenu */
-    .navbar-main li ul {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: #fff;
-      min-width: 180px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      z-index: 99;
-    }
+/* Nested submenu */
+.navbar-main li ul li ul {
+  top: 0;
+  left: 100%;
+  margin-left: 1px;
+}
 
-    .navbar-main li.open > ul {
-      display: block;
-    }
+/* ========== DESKTOP (hover menus) ========== */
+@media (min-width: 768px) {
+  .navbar-main li:hover>ul {
+    display: block;
+  }
 
-    .navbar-main li ul li a {
-      font-size: 14px;
-      font-weight: normal;
-      text-transform: none;
-      color: #333;
-      padding: 10px 15px;
-      display: block;
-    }
+  .navbar-main li ul li:hover>ul {
+    display: block;
+  }
 
-    .navbar-main li ul li a:hover {
-      background: orangered;
-      color: #fff;
-    }
+  /* Dropdown icon styling */
+  .dropdown-icon {
+      margin-left: 5px;
+      font-size: 12px;
+      transition: transform 0.3s ease;
+  }
 
-    /* Nested Submenu */
-    .navbar-main li ul li ul {
-      top: 0;
-      left: 100%;
-      margin-left: 1px;
-    }
+  /* Rotate icon when open on desktop */
+  .navbar-main li.has-submenu:hover > a > .dropdown-icon {
+      transform: rotate(-90deg);
+  }
+}
 
-    /* Mobile */
-    .mobile-toggle {
-      display: none;
-      cursor: pointer;
-    }
+/* ========== MOBILE (click menus) ========== */
+@media (max-width: 768px) {
+  .navbar-main {
+    flex-direction: column;
+  }
 
+  .navbar-main ul {
+    flex-direction: column;
+    gap: 0;
+  }
 
+  .navbar-main li {
+    width: 100%;
+  }
+
+  .navbar-main li ul {
+    position: static;
+    box-shadow: none;
+  }
+
+  .navbar-main li ul li ul {
+    margin-left: 15px;
+    /* indent nested submenu */
+  }
+
+  .navbar-main li.open>ul {
+    display: block;
+    /* JS adds .open */
+  }
+}
 
 
 /* Phones (portrait and smaller) */
@@ -252,10 +282,12 @@ body {
     background-color: #ff0000;
   }
 }
+
 /* Phones (landscape) */
 @media (max-width: 767.98px) {
   .navbar-inner-outer {
-    background-color: #e2f2ff; /* Restore original color */
+    background-color: #e2f2ff;
+    /* Restore original color */
   }
 
   .navbar-aside,
@@ -271,17 +303,13 @@ body {
 
   .mobile-toggle {
     display: block;
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    z-index: 10;
   }
-  
+
   .navbar-inner {
     align-items: center;
     justify-content: space-between;
     padding: 10px 15px;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
   }
 
   .navbar-brand {
@@ -290,36 +318,35 @@ body {
   }
 
   .navbar-brand img {
-    height: 40px;
+    height: 42px;
     width: auto;
   }
 
   /* Menu -> Search Box */
+  .mobile-search-wrap {
+    
+  }
   .mobile-search-box {
     display: flex;
     width: 100%;
-    order: 3;
-    margin-top: 10px;
   }
 
   .mobile-search-box input {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #fff;
     flex-grow: 1;
-    border-radius: 4px 0 0 4px;
   }
 
   .mobile-search-box input:focus {
-    border-color: #7e21ff;
+    border-color: #ed592f;
     outline: none;
   }
 
   .mobile-search-box button {
     border: none;
-    background: #7e21ff;
+    background: #ed592f;
     padding: 0 15px;
     color: #fff;
-    border-radius: 0 4px 4px 0;
   }
 
   /* Mobile menu styles */
@@ -337,7 +364,7 @@ body {
     transform: translateX(-100%);
     transition: transform 0.3s ease;
   }
-  
+
   .navbar-mobile .navbar-main.mobile-active {
     transform: translateX(0);
   }
@@ -348,7 +375,7 @@ body {
     width: 100%;
   }
 
-  .navbar-mobile .navbar-main > ul > li {
+  .navbar-mobile .navbar-main>ul>li {
     border-bottom: 1px solid #eaeaea;
   }
 
@@ -359,12 +386,12 @@ body {
     font-size: 16px;
   }
 
-  .navbar-mobile .navbar-main > ul > li > a::before,
-  .navbar-mobile .navbar-main > ul > li > a::after {
+  .navbar-mobile .navbar-main>ul>li>a::before,
+  .navbar-mobile .navbar-main>ul>li>a::after {
     display: none;
   }
 
-  .navbar-mobile .navbar-main li.open > a {
+  .navbar-mobile .navbar-main li.open>a {
     color: #7e21ff;
     background-color: #f0f0f0;
   }
@@ -377,8 +404,8 @@ body {
     padding-left: 15px;
     display: none;
   }
-  
-  .navbar-mobile .navbar-main li.open > ul {
+
+  .navbar-mobile .navbar-main li.open>ul {
     display: block;
   }
 
@@ -392,18 +419,6 @@ body {
     color: #fff;
   }
 
-  /* Close button for mobile menu */
-  .mobile-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #333;
-  }
-  
   /* Show aside in mobile when menu is active */
   .navbar-mobile .navbar-aside {
     display: block;
@@ -411,26 +426,29 @@ body {
     padding-top: 20px;
     border-top: 1px solid #eaeaea;
   }
-  
+
   .navbar-mobile .navbar-contacts {
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .navbar-mobile .navbar-contacts li {
     margin-right: 0;
   }
-  
+
   .navbar-mobile .list-share {
     justify-content: center;
     margin-top: 15px;
   }
+
+  
 }
 
 /* Tablets */
 @media (min-width: 768px) and (max-width: 991.98px) {
   .navbar-inner-outer {
-    background-color: #e2f2ff; /* Restore original color */
+    background-color: #e2f2ff;
+    /* Restore original color */
   }
 
   .navbar-contacts {
@@ -444,11 +462,11 @@ body {
     margin-left: 5px;
     font-size: 14px;
   }
-  
-  .navbar-main > ul {
+
+  .navbar-main>ul {
     gap: 10px;
   }
-  
+
   .navbar-main a {
     font-size: 14px;
     padding: 10px 8px;
@@ -458,7 +476,8 @@ body {
 /* Desktops */
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .navbar-inner-outer {
-    background-color: #e2f2ff; /* Restore original color */
+    background-color: #e2f2ff;
+    /* Restore original color */
   }
 
   .navbar-contacts {

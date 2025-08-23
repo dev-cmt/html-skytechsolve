@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fixed Navigation</title>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="icon.css">
 </head>
 
@@ -14,14 +16,15 @@
             <!--Brand Logo-->
             <div class="navbar-brand">
                 <a href="index.html">
-                    <img class="brand-logo-dark" src="assets/img/logo.png" alt=""
-                        height="66">
+                    <img class="brand-logo-dark" src="assets/img/logo.png" alt="" height="66">
                 </a>
             </div>
             <!--Mobile Search-->
-            <div class="mobile-search-box">
-                <input type="text" value="" placeholder="Search...">
-                <button>Search</button>
+            <div class="mobile-search-wrap">
+                <div class="mobile-search-box">
+                    <input type="text" value="" placeholder="Search...">
+                    <button>Search</button>
+                </div>
             </div>
 
             <div class="navbar-wrap">
@@ -40,37 +43,22 @@
                     <ul class="navbar-contacts">
                         <li>
                             <a class="phone" href="tel:+8801909302126">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-phone">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
-                                </svg>
+                                <i class="fas fa-phone"></i>
                                 <span>+88 019 093 02126</span>
                             </a>
                         </li>
                         <li>
                             <a class="" href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
-                                    <path
-                                        d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
-                                </svg>
+                                <i class="fas fa-map-marker-alt"></i>
                                 <span>514 S. Magnolia St. Orlando, FL 32806</span>
                             </a>
                         </li>
                     </ul>
                     <ul class="list-share">
-                        <li><a class="icon mdi mdi-facebook" href="#">F</a></li>
-                        <li><a class="icon mdi mdi-twitter" href="#">T</a></li>
-                        <li><a class="icon mdi mdi-instagram" href="#">I</a></li>
-                        <li><a class="icon mdi mdi-google-plus" href="#">G</a></li>
+                        <li><a class="icon" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a class="icon" href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a class="icon" href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a class="icon" href="#"><i class="fab fa-google-plus-g"></i></a></li>
                     </ul>
                 </div>
 
@@ -78,12 +66,12 @@
                     <ul>
                         <li><a href="index.html">Home</a></li>
 
-                        <li>
-                            <a href="about-us.html">About Us</a>
+                        <li class="has-submenu">
+                            <a href="about-us.html">About Us <i class="dropdown-icon fas fa-chevron-down"></i></a>
                             <ul>
                                 <li><a href="#">Our Team</a></li>
-                                <li>
-                                    <a href="#">Services ▸</a>
+                                <li class="has-submenu">
+                                    <a href="#">Services <i class="dropdown-icon fas fa-chevron-down"></i></a>
                                     <ul>
                                         <li><a href="#">Web Design</a></li>
                                         <li><a href="#">Development</a></li>
@@ -97,63 +85,62 @@
                         <li><a href="typography.html">Typography</a></li>
                         <li><a href="contacts.html">Contacts</a></li>
                     </ul>
-
                 </nav>
             </div>
 
         </div>
     </div>
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const navbar = document.querySelector(".navbar-main");
-            const toggleBtn = document.querySelector(".mobile-toggle");
-            const navbarWrap = document.querySelector(".navbar-wrap");
-            const body = document.body;
+        $(document).ready(function() {
+            const $navbar = $(".navbar-main");
+            const $toggleBtn = $(".mobile-toggle");
+            const $navbarWrap = $(".navbar-wrap");
+            const $body = $("body");
 
             // Mobile menu toggle
-            toggleBtn.addEventListener("click", () => {
-                navbarWrap.classList.toggle("navbar-mobile");
-                navbar.classList.toggle("mobile-active");
-                body.style.overflow = navbarWrap.classList.contains("navbar-mobile") ? "hidden" : "";
+            $toggleBtn.on("click", function() {
+                $navbarWrap.toggleClass("navbar-mobile");
+                $navbar.toggleClass("mobile-active");
+                $body.css("overflow", $navbarWrap.hasClass("navbar-mobile") ? "hidden" : "");
             });
 
-            // Close button for mobile menu
-            const closeButton = document.createElement("button");
-            closeButton.className = "mobile-close";
-            closeButton.innerHTML = "&times;";
-            closeButton.addEventListener("click", () => {
-                navbarWrap.classList.remove("navbar-mobile");
-                navbar.classList.remove("mobile-active");
-                body.style.overflow = "";
-            });
-            navbar.appendChild(closeButton);
-
-            // Click toggle for submenus (dynamic)
-            navbar.addEventListener("click", e => {
-                const link = e.target.closest("a");
-                if (!link) return;
-
-                const parentLi = link.parentElement;
-                const submenu = link.nextElementSibling;
-
-                if (submenu && submenu.tagName === "UL") {
-                    e.preventDefault();
-
-                    // Close other open submenus at same level
-                    parentLi.parentElement.querySelectorAll("li.open")
-                        .forEach(li => li !== parentLi && li.classList.remove("open"));
-
-                    parentLi.classList.toggle("open");
+            // Toggle submenus with plus/minus icons
+            $navbar.on("click", ".has-submenu > a", function(e) {
+                e.preventDefault();
+                
+                const $parentLi = $(this).parent();
+                const $submenu = $parentLi.children("ul");
+                
+                // Close other open submenus at same level
+                $parentLi.siblings(".open").removeClass("open").find("> a > .dropdown-icon")
+                    .removeClass("fa-minus").addClass("fa-plus");
+                
+                // Toggle current submenu
+                $parentLi.toggleClass("open");
+                const $dropdownIcon = $(this).find(".dropdown-icon");
+                
+                if ($parentLi.hasClass("open")) {
+                    $dropdownIcon.removeClass("fa-plus").addClass("fa-minus");
+                    $submenu.slideDown(300);
+                } else {
+                    $dropdownIcon.removeClass("fa-minus").addClass("fa-plus");
+                    $submenu.slideUp(300);
                 }
             });
 
-            // Close all submenus when clicking outside
-            document.addEventListener("click", e => {
-                if (!e.target.closest(".navbar-main")) {
-                    navbar.querySelectorAll("li.open").forEach(li => li.classList.remove("open"));
-                }
-            });
+           
+            // Initialize dropdown icons on page load
+            function initDropdownIcons() {
+                $(".has-submenu > a").each(function() {
+                    if (!$(this).find(".dropdown-icon").length) {
+                        $(this).append('<i class="dropdown-icon fas fa-plus"></i>');
+                    }
+                });
+            }
+            initDropdownIcons();
         });
     </script>
 </body>
