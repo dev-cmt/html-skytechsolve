@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fixed Navigation</title>
+    <title>Fixed Navigation with Working Sub-Submenus</title>
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="icon.css">
@@ -13,12 +13,25 @@
 <body>
     <div class="navbar-inner-outer">
         <div class="navbar-inner">
+            <!--Mobile Toggle-->
+            <div class="mobile-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-baseline-density-medium">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M4 20h16" />
+                    <path d="M4 12h16" />
+                    <path d="M4 4h16" />
+                </svg>
+            </div>
+            
             <!--Brand Logo-->
             <div class="navbar-brand">
                 <a href="index.html">
                     <img class="brand-logo-dark" src="assets/img/logo.png" alt="" height="66">
                 </a>
             </div>
+
             <!--Mobile Search-->
             <div class="mobile-search-wrap">
                 <div class="mobile-search-box">
@@ -28,17 +41,12 @@
             </div>
 
             <div class="navbar-wrap">
-                <!--Mobile Toggle-->
-                <div class="mobile-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="icon icon-tabler icons-tabler-outline icon-tabler-baseline-density-medium">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M4 20h16" />
-                        <path d="M4 12h16" />
-                        <path d="M4 4h16" />
-                    </svg>
-                </div>
+                <!--Search Toggle-->
+                <button class="search-toggle">
+                    <i class="fas fa-search"></i>
+                </button>
+                
+    
                 <div class="navbar-aside">
                     <ul class="navbar-contacts">
                         <li>
@@ -87,8 +95,28 @@
                     </ul>
                 </nav>
             </div>
-
         </div>
+    </div>
+
+    <div class="navbar-overlay"></div>
+
+    <!-- Content for demonstration -->
+    <div class="content">
+        <div class="section">
+            <h1>Fixed Desktop Sub-Submenu Hover Issue</h1>
+            <p>The sub-submenu hover issue on desktop has been fixed. Now when you hover over "Services" in the "About Us" dropdown, the nested menu will appear correctly.</p>
+            <p>On mobile devices, click the hamburger icon to open the menu. Use the search icon to toggle the search box.</p>
+        </div>
+        
+        <div class="section">
+            <h2>Key Fixes Applied</h2>
+            <p>✅ Fixed the CSS selector for sub-submenu hover: <code>.navbar-main li ul li.has-submenu:hover > ul</code></p>
+            <p>✅ Added proper rotation for submenu dropdown icons</p>
+            <p>✅ Improved the positioning of nested submenus</p>
+            <p>✅ Enhanced visual feedback for hover states</p>
+        </div>
+        
+        <div style="height: 1000px;"></div>
     </div>
 
     <!-- jQuery -->
@@ -97,49 +125,85 @@
         $(document).ready(function() {
             const $navbar = $(".navbar-main");
             const $toggleBtn = $(".mobile-toggle");
-            const $navbarWrap = $(".navbar-wrap");
+            const $closeBtn = $(".mobile-close");
+            const $searchToggle = $(".search-toggle");
+            const $searchWrap = $(".mobile-search-wrap");
             const $body = $("body");
+            const $overlay = $(".navbar-overlay");
 
             // Mobile menu toggle
             $toggleBtn.on("click", function() {
-                $navbarWrap.toggleClass("navbar-mobile");
-                $navbar.toggleClass("mobile-active");
-                $body.css("overflow", $navbarWrap.hasClass("navbar-mobile") ? "hidden" : "");
+                $navbar.addClass("mobile-active");
+                $overlay.show();
+                $body.css("overflow", "hidden");
             });
 
-            // Toggle submenus with plus/minus icons
+            // Close mobile menu
+            $closeBtn.on("click", function() {
+                $navbar.removeClass("mobile-active");
+                $overlay.hide();
+                $body.css("overflow", "");
+            });
+
+            // Close menu when clicking overlay
+            $overlay.on("click", function() {
+                $navbar.removeClass("mobile-active");
+                $overlay.hide();
+                $body.css("overflow", "");
+                $searchWrap.slideUp();
+            });
+
+            // Toggle search box
+            $searchToggle.on("click", function() {
+                $searchWrap.slideToggle(300);
+                $searchWrap.find('input').focus();
+            });
+
+            // Toggle submenus with appropriate icons
             $navbar.on("click", ".has-submenu > a", function(e) {
-                e.preventDefault();
-                
-                const $parentLi = $(this).parent();
-                const $submenu = $parentLi.children("ul");
-                
-                // Close other open submenus at same level
-                $parentLi.siblings(".open").removeClass("open").find("> a > .dropdown-icon")
-                    .removeClass("fa-minus").addClass("fa-plus");
-                
-                // Toggle current submenu
-                $parentLi.toggleClass("open");
-                const $dropdownIcon = $(this).find(".dropdown-icon");
-                
-                if ($parentLi.hasClass("open")) {
-                    $dropdownIcon.removeClass("fa-plus").addClass("fa-minus");
-                    $submenu.slideDown(300);
-                } else {
-                    $dropdownIcon.removeClass("fa-minus").addClass("fa-plus");
-                    $submenu.slideUp(300);
+                if ($(window).width() < 768) {
+                    e.preventDefault();
+                    
+                    const $parentLi = $(this).parent();
+                    const $submenu = $parentLi.children("ul");
+                    const $dropdownIcon = $(this).find(".dropdown-icon");
+                    
+                    // Close other open submenus at same level
+                    $parentLi.siblings(".open").removeClass("open").find("> a > .dropdown-icon")
+                        .removeClass("fa-minus").addClass("fa-plus");
+                    
+                    // Toggle current submenu
+                    $parentLi.toggleClass("open");
+                    
+                    if ($parentLi.hasClass("open")) {
+                        $dropdownIcon.removeClass("fa-plus").addClass("fa-minus");
+                        $submenu.slideDown(300);
+                    } else {
+                        $dropdownIcon.removeClass("fa-minus").addClass("fa-plus");
+                        $submenu.slideUp(300);
+                    }
                 }
             });
 
-           
             // Initialize dropdown icons on page load
             function initDropdownIcons() {
                 $(".has-submenu > a").each(function() {
                     if (!$(this).find(".dropdown-icon").length) {
-                        $(this).append('<i class="dropdown-icon fas fa-plus"></i>');
+                        if ($(window).width() < 768) {
+                            $(this).append('<i class="dropdown-icon fas fa-plus"></i>');
+                        } else {
+                            $(this).append('<i class="dropdown-icon fas fa-chevron-down"></i>');
+                        }
                     }
                 });
             }
+            
+            // Update icons on window resize
+            $(window).on('resize', function() {
+                $(".has-submenu > a .dropdown-icon").remove();
+                initDropdownIcons();
+            });
+            
             initDropdownIcons();
         });
     </script>

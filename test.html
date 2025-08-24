@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixed Navigation</title>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: aliceblue;
+        }
+
+
+        /*--------------------------------------------------------------
+# Header Section
+--------------------------------------------------------------*/
+        .mobile-toggle,
+        .mobile-search-box {
+            display: none;
+        }
+
+        .navbar-inner-outer {
+            background-color: #e2f2ff;
+        }
+
+        .navbar-inner {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Menu -> Logo */
+        .navbar-brand {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+            width: 180px;
+            z-index: 1;
+        }
+
+        .navbar-brand::before {
+            position: absolute;
+            content: '';
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            background: #ffffff;
+            transform: skewX(16deg);
+            transform-origin: 50% 100%;
+            will-change: transform;
+            z-index: -1;
+        }
+
+        /* Menu -> Contact Us */
+        .navbar-aside {
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+            z-index: 1;
+        }
+
+        .navbar-aside::before {
+            position: absolute;
+            content: '';
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #ffffff;
+            transform: skewX(16deg);
+            transform-origin: 50% 90%;
+            will-change: transform;
+            z-index: -1;
+        }
+
+        .navbar-aside::after {
+            position: absolute;
+            content: '';
+            left: 0;
+            width: 100%;
+            height: 90%;
+            background: #ffffff;
+            z-index: -1;
+        }
+
+        .navbar-contacts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px 0px;
+        }
+
+        .navbar-contacts li {
+            list-style-type: none;
+            margin-right: 15px;
+        }
+
+        .navbar-contacts li a {
+            text-decoration: none;
+            color: #ff3c00;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-contacts li a span {
+            padding: 10px;
+            color: #0088E2;
+        }
+
+        .list-share {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-right: 15px;
+        }
+
+        .list-share li {
+            list-style-type: none;
+            width: 30px;
+            height: 30px;
+            background-color: black;
+        }
+
+        /* ========== BASE MENU ========== */
+        .navbar-main {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .navbar-main ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar-main li {
+            position: relative;
+        }
+
+        .navbar-main a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 10px 12px;
+            color: #222;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+
+        /* Hover underline effect (main links only) */
+        .navbar-main>ul>li>a::before,
+        .navbar-main>ul>li>a::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background: orangered;
+            transition: 0.3s;
+        }
+
+        .navbar-main>ul>li>a::before {
+            left: 0;
+            bottom: 0;
+        }
+
+        .navbar-main>ul>li>a::after {
+            right: 0;
+            top: 0;
+        }
+
+        .navbar-main>ul>li>a:hover {
+            color: orangered;
+        }
+
+        .navbar-main>ul>li>a:hover::before,
+        .navbar-main>ul>li>a:hover::after {
+            width: 100%;
+        }
+
+        /* ========== SUBMENU ========== */
+        .navbar-main li ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            min-width: 180px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 99;
+            flex-direction: column;
+        }
+
+        .navbar-main li ul li {
+            width: 100%;
+        }
+
+        .navbar-main li ul li a {
+            font-size: 14px;
+            font-weight: normal;
+            text-transform: none;
+            color: #333;
+            padding: 10px 15px;
+            display: block;
+            transition: 0.2s;
+        }
+
+        .navbar-main li ul li a:hover {
+            background: orangered;
+            color: #fff;
+        }
+
+        /* Nested submenu */
+        .navbar-main li ul li ul {
+            top: 0;
+            left: 100%;
+            margin-left: 1px;
+        }
+
+        /* ========== DESKTOP (hover menus) ========== */
+        @media (min-width: 768px) {
+            .navbar-main li:hover>ul {
+                display: block;
+            }
+
+            .navbar-main li ul li:hover>ul {
+                display: block;
+            }
+
+            /* Dropdown icon styling */
+            .dropdown-icon {
+                margin-left: 5px;
+                font-size: 12px;
+                transition: transform 0.3s ease;
+            }
+
+            /* Rotate icon when open on desktop */
+            .navbar-main li.has-submenu:hover>a>.dropdown-icon {
+                transform: rotate(-90deg);
+            }
+        }
+
+        /* ========== MOBILE (click menus) ========== */
+        @media (max-width: 768px) {
+            .navbar-main {
+                flex-direction: column;
+            }
+
+            .navbar-main ul {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .navbar-main li {
+                width: 100%;
+            }
+
+            .navbar-main li ul {
+                position: static;
+                box-shadow: none;
+            }
+
+            .navbar-main li ul li ul {
+                margin-left: 15px;
+                /* indent nested submenu */
+            }
+
+            .navbar-main li.open>ul {
+                display: block;
+                /* JS adds .open */
+            }
+        }
+
+
+        /* Phones (portrait and smaller) */
+        @media (max-width: 575.98px) {
+            .navbar-inner-outer {
+                background-color: #ff0000;
+            }
+        }
+
+        /* Phones (landscape) */
+        @media (max-width: 767.98px) {
+            .navbar-inner-outer {
+                background-color: #e2f2ff;
+                /* Restore original color */
+            }
+
+            .navbar-aside,
+            .navbar-main:not(.mobile-active) {
+                display: none;
+            }
+
+            .navbar-brand::before,
+            .navbar-aside::before,
+            .navbar-aside::after {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .navbar-inner {
+                align-items: center;
+                justify-content: space-between;
+                padding: 10px 15px;
+                /* flex-wrap: wrap; */
+            }
+
+            .navbar-brand {
+                margin-bottom: 0;
+                width: auto;
+            }
+
+            .navbar-brand img {
+                height: 42px;
+                width: auto;
+            }
+
+            /* Menu -> Search Box */
+            .mobile-search-wrap {}
+
+            .mobile-search-box {
+                display: flex;
+                width: 100%;
+            }
+
+            .mobile-search-box input {
+                padding: 10px;
+                border: 1px solid #fff;
+                flex-grow: 1;
+            }
+
+            .mobile-search-box input:focus {
+                border-color: #ed592f;
+                outline: none;
+            }
+
+            .mobile-search-box button {
+                border: none;
+                background: #ed592f;
+                padding: 0 15px;
+                color: #fff;
+            }
+
+            /* Mobile menu styles */
+            .navbar-mobile .navbar-main {
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #f8f9fa;
+                z-index: 1000;
+                padding: 60px 20px 20px;
+                overflow-y: auto;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .navbar-mobile .navbar-main.mobile-active {
+                transform: translateX(0);
+            }
+
+            .navbar-mobile .navbar-main ul {
+                flex-direction: column;
+                gap: 0;
+                width: 100%;
+            }
+
+            .navbar-mobile .navbar-main>ul>li {
+                border-bottom: 1px solid #eaeaea;
+            }
+
+            .navbar-mobile .navbar-main a {
+                display: block;
+                padding: 12px 15px;
+                color: #333;
+                font-size: 16px;
+            }
+
+            .navbar-mobile .navbar-main>ul>li>a::before,
+            .navbar-mobile .navbar-main>ul>li>a::after {
+                display: none;
+            }
+
+            .navbar-mobile .navbar-main li.open>a {
+                color: #7e21ff;
+                background-color: #f0f0f0;
+            }
+
+            /* Submenu styles for mobile */
+            .navbar-mobile .navbar-main li ul {
+                position: static;
+                box-shadow: none;
+                background-color: #f7f7f7;
+                padding-left: 15px;
+                display: none;
+            }
+
+            .navbar-mobile .navbar-main li.open>ul {
+                display: block;
+            }
+
+            .navbar-mobile .navbar-main li ul li a {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            .navbar-mobile .navbar-main li ul li a:hover {
+                background: #7e21ff;
+                color: #fff;
+            }
+
+            /* Show aside in mobile when menu is active */
+            .navbar-mobile .navbar-aside {
+                display: block;
+                margin-top: 20px;
+                padding-top: 20px;
+                border-top: 1px solid #eaeaea;
+            }
+
+            .navbar-mobile .navbar-contacts {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .navbar-mobile .navbar-contacts li {
+                margin-right: 0;
+            }
+
+            .navbar-mobile .list-share {
+                justify-content: center;
+                margin-top: 15px;
+            }
+
+
+        }
+
+        /* Tablets */
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            .navbar-inner-outer {
+                background-color: #e2f2ff;
+                /* Restore original color */
+            }
+
+            .navbar-contacts {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .navbar-contacts li a span {
+                padding: 5px 0px;
+                margin-left: 5px;
+                font-size: 14px;
+            }
+
+            .navbar-main>ul {
+                gap: 10px;
+            }
+
+            .navbar-main a {
+                font-size: 14px;
+                padding: 10px 8px;
+            }
+        }
+
+        /* Desktops */
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .navbar-inner-outer {
+                background-color: #e2f2ff;
+                /* Restore original color */
+            }
+
+            .navbar-contacts {
+                display: flex;
+            }
+
+            .navbar-contacts li a span {
+                padding: 5px 0px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar-inner-outer">
+        <div class="navbar-inner">
+            <!--Brand Logo-->
+            <div class="navbar-brand">
+                <a href="index.html">
+                    <img class="brand-logo-dark" src="assets/img/logo.png" alt="" height="66">
+                </a>
+            </div>
+            <!--Mobile Search-->
+            <div class="mobile-search-wrap">
+                <div class="mobile-search-box">
+                    <input type="text" value="" placeholder="Search...">
+                    <button>Search</button>
+                </div>
+            </div>
+
+            <div class="navbar-wrap">
+                <!--Mobile Toggle-->
+                <div class="mobile-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-baseline-density-medium">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 20h16" />
+                        <path d="M4 12h16" />
+                        <path d="M4 4h16" />
+                    </svg>
+                </div>
+                <div class="navbar-aside">
+                    <ul class="navbar-contacts">
+                        <li>
+                            <a class="phone" href="tel:+8801909302126">
+                                <i class="fas fa-phone"></i>
+                                <span>+88 019 093 02126</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="#">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>514 S. Magnolia St. Orlando, FL 32806</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="list-share">
+                        <li><a class="icon" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a class="icon" href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a class="icon" href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a class="icon" href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                    </ul>
+                </div>
+
+                <nav class="navbar-main">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+
+                        <li class="has-submenu">
+                            <a href="about-us.html">About Us <i class="dropdown-icon fas fa-chevron-down"></i></a>
+                            <ul>
+                                <li><a href="#">Our Team</a></li>
+                                <li class="has-submenu">
+                                    <a href="#">Services <i class="dropdown-icon fas fa-chevron-down"></i></a>
+                                    <ul>
+                                        <li><a href="#">Web Design</a></li>
+                                        <li><a href="#">Development</a></li>
+                                        <li><a href="#">SEO</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Careers</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="typography.html">Typography</a></li>
+                        <li><a href="contacts.html">Contacts</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const $navbar = $(".navbar-main");
+            const $toggleBtn = $(".mobile-toggle");
+            const $navbarWrap = $(".navbar-wrap");
+            const $body = $("body");
+
+            // Mobile menu toggle
+            $toggleBtn.on("click", function () {
+                $navbarWrap.toggleClass("navbar-mobile");
+                $navbar.toggleClass("mobile-active");
+                $body.css("overflow", $navbarWrap.hasClass("navbar-mobile") ? "hidden" : "");
+            });
+
+            // Toggle submenus with plus/minus icons
+            $navbar.on("click", ".has-submenu > a", function (e) {
+                e.preventDefault();
+
+                const $parentLi = $(this).parent();
+                const $submenu = $parentLi.children("ul");
+
+                // Close other open submenus at same level
+                $parentLi.siblings(".open").removeClass("open").find("> a > .dropdown-icon")
+                    .removeClass("fa-minus").addClass("fa-plus");
+
+                // Toggle current submenu
+                $parentLi.toggleClass("open");
+                const $dropdownIcon = $(this).find(".dropdown-icon");
+
+                if ($parentLi.hasClass("open")) {
+                    $dropdownIcon.removeClass("fa-plus").addClass("fa-minus");
+                    $submenu.slideDown(300);
+                } else {
+                    $dropdownIcon.removeClass("fa-minus").addClass("fa-plus");
+                    $submenu.slideUp(300);
+                }
+            });
+
+
+            // Initialize dropdown icons on page load
+            function initDropdownIcons() {
+                $(".has-submenu > a").each(function () {
+                    if (!$(this).find(".dropdown-icon").length) {
+                        $(this).append('<i class="dropdown-icon fas fa-plus"></i>');
+                    }
+                });
+            }
+            initDropdownIcons();
+        });
+    </script>
+</body>
+
+</html>
